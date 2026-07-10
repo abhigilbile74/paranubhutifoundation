@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paranubhutifoundation/features/home/presentation/screens/donate_screen.dart';
+import 'package:paranubhutifoundation/features/donation/presentation/screen/donate_screen.dart';
 import 'package:paranubhutifoundation/features/home/presentation/screens/home_screen.dart';
 import 'package:paranubhutifoundation/features/home/presentation/screens/profile_screen.dart';
 import 'package:paranubhutifoundation/features/home/presentation/screens/splash_screen.dart';

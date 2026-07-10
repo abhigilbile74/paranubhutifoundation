@@ -13,11 +13,11 @@ AppBar buildAppBar({
     elevation: 0,
     centerTitle: centerTitle,
     backgroundColor: Colors.transparent,
-    foregroundColor: Colors.white,
+    foregroundColor: Colors.black,
     flexibleSpace: Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
+          colors: [Color.fromARGB(255, 238, 239, 240), Color.fromARGB(255, 147, 199, 241)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -39,9 +39,9 @@ AppBar buildAppBar({
           title ?? AppConstants.appName,
           style: const TextStyle(
             fontSize: 22,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             letterSpacing: 0.5,
-            color: Colors.white,
+            color: Color.fromARGB(255, 19, 20, 19),
           ),
         ),
       ],
