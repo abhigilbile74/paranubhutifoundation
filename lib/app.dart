@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:paranubhutifoundation/config/routes/routes_name.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:paranubhutifoundation/features/home/presentation/screens/splash_screen.dart';
+import 'core/theme/app_theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -8,8 +11,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      initialRoute: RoutesNames.homescreen,
+      theme: AppTheme.lightTheme.copyWith(
+        textTheme: GoogleFonts.plusJakartaSansTextTheme(
+          AppTheme.lightTheme.textTheme,
+        ),
+      ),
+
+      initialRoute:RoutesNames.splash,
       routes: RoutesNames.routes,
     );
 
