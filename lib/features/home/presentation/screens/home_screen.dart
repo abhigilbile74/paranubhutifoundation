@@ -10,6 +10,12 @@ import 'package:paranubhutifoundation/core/theme/app_theme.dart';
 
 
 
+
+
+// 👇 adjust these two paths to wherever these screens actually live in your project
+import 'package:paranubhutifoundation/features/home/presentation/screens/register_birthday_screen.dart';
+import 'package:paranubhutifoundation/features/donation/presentation/screen/donate_screen.dart';
+
 /// Home screen — matches the "Birthday Cause" Stitch design:
 /// header → headline → Your Birthday card → Someone Special card →
 /// Quick Actions (Donate Now / Share a Fundraiser) → Featured Cause.
@@ -47,7 +53,10 @@ class HomeScreen extends StatelessWidget {
                 label: 'Add your birthday',
                 trailingIcon: Icons.arrow_forward_rounded,
                 onPressed: () {
-                  // TODO: Navigator.pushNamed(context, RoutesNames.registerBirthday);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const RegisterBirthdayScreen()),
+                  );
                 },
               ),
             ),
@@ -62,8 +71,13 @@ class HomeScreen extends StatelessWidget {
                 label: "Add someone else's",
                 trailingIcon: Icons.add_rounded,
                 onPressed: () {
-                  // TODO: Navigator.pushNamed(
-                  //   context, RoutesNames.registerBirthday, arguments: {'relation': 'other'});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const RegisterBirthdayScreen()),
+                  );
+                  // If RegisterBirthdayScreen needs to know it's "someone else" up
+                  // front, add a constructor param, e.g.:
+                  // RegisterBirthdayScreen(initialRelation: 'other')
                 },
               ),
             ),
@@ -79,7 +93,10 @@ class HomeScreen extends StatelessWidget {
               title: 'Donate Now',
               description: 'Support a trending cause immediately.',
               onTap: () {
-                // TODO: Navigator.pushNamed(context, RoutesNames.donate);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const DonateScreen()),
+                );
               },
             ),
             const SizedBox(height: AppSpacing.gutter),
@@ -89,7 +106,7 @@ class HomeScreen extends StatelessWidget {
               title: 'Share a Fundraiser',
               description: 'Invite friends to join a celebration of giving.',
               onTap: () {
-                // TODO: Navigator.pushNamed(context, RoutesNames.createFundraiser);
+                // TODO: navigate to CreateFundraiserScreen once that screen exists
               },
             ),
 
@@ -118,6 +135,8 @@ class HomeScreen extends StatelessWidget {
               title: 'Birthday Books for All',
               description:
               'Help us provide 1,000 books to children in underserved communities this month.',
+              amountRaised: 4200,
+              goalAmount: 5000,
             ),
 
             const SizedBox(height: AppSpacing.sectionGap),
@@ -272,7 +291,7 @@ class _QuickActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: onTap, // 👈 was hardcoded to a broken Navigator.push with an undefined `route`
       borderRadius: BorderRadius.circular(AppRadius.xxl),
       child: Container(
         width: double.infinity,
@@ -316,19 +335,30 @@ class _QuickActionTile extends StatelessWidget {
   }
 }
 
-/// Featured cause card — image with a category tag, title, and description.
+/// Featured cause card — image with a category tag, title, description,
+/// and a "$X raised / Goal: $Y" progress bar.
 class _FeaturedCauseCard extends StatelessWidget {
   final String tag;
   final String imagePath;
   final String title;
   final String description;
+  final double amountRaised;
+  final double goalAmount;
 
   const _FeaturedCauseCard({
     required this.tag,
     required this.imagePath,
     required this.title,
     required this.description,
+    required this.amountRaised,
+    required this.goalAmount,
   });
+
+  double get _progress => goalAmount <= 0 ? 0 : (amountRaised / goalAmount).clamp(0, 1);
+
+  String _formatAmount(double value) {
+    return value % 1 == 0 ? value.toStringAsFixed(0) : value.toStringAsFixed(2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -375,6 +405,38 @@ class _FeaturedCauseCard extends StatelessWidget {
                 Text(title, style: AppTextStyles.headlineMd.copyWith(fontSize: 18)),
                 const SizedBox(height: AppSpacing.unit),
                 Text(description, style: AppTextStyles.bodyMd),
+                const SizedBox(height: AppSpacing.gutter),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$${_formatAmount(amountRaised)} raised',
+                      style: AppTextStyles.bodyMd.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
+                        fontSize: 13,
+                      ),
+                    ),
+                    Text(
+                      'Goal: \$${_formatAmount(goalAmount)}',
+                      style: AppTextStyles.bodyMd.copyWith(
+                        color: AppColors.onSurfaceVariant,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.unit),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.full),
+                  child: LinearProgressIndicator(
+                    value: _progress,
+                    minHeight: 10,
+                    backgroundColor: AppColors.surfaceContainerHigh,
+                    valueColor: const AlwaysStoppedAnimation(AppColors.primary),
+                  ),
+                ),
               ],
             ),
           ),
