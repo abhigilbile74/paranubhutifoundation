@@ -22,9 +22,9 @@ class _DonateScreenState extends State<DonateScreen> {
   // TODO: replace with causes fetched from Firestore via a provider
   final List<CauseModel> _causes = const [
     CauseModel(
-      id: 'food',
-      title: 'Food Assistance',
-      description: 'Providing warm meals and groceries to families in need.',
+      id: 'health',
+      title: 'Health Support',
+      description: 'Providing general health check-ups, and diagnostic tests.',
       icon: Icons.restaurant_rounded,
       badgeColor: AppColors.primaryContainer,
     ),
@@ -36,9 +36,9 @@ class _DonateScreenState extends State<DonateScreen> {
       badgeColor: AppColors.secondaryContainer,
     ),
     CauseModel(
-      id: 'community',
-      title: 'Community Welfare',
-      description: 'Building community centers and local support networks.',
+      id: 'women',
+      title: 'Women Empowerment',
+      description: 'Providing hygiene and health kits, skill development programs.',
       icon: Icons.groups_rounded,
       badgeColor: AppColors.tertiaryContainer,
     ),
