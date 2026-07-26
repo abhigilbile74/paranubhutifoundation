@@ -52,9 +52,9 @@ class _DonateScreenState extends State<DonateScreen> {
   ];
 
   static const List<_AmountOption> _presetAmounts = [
-    _AmountOption(amount: 25, label: 'Small'),
-    _AmountOption(amount: 50, label: 'Popular'),
-    _AmountOption(amount: 100, label: 'Large'),
+    _AmountOption(amount: 100, label: 'Small'),
+    _AmountOption(amount: 500, label: 'Popular'),
+    _AmountOption(amount: 1000, label: 'Large'),
   ];
 
   String? _selectedCauseId;
@@ -305,7 +305,7 @@ class _AmountCircle extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: Text(
-              '\$${option.amount.toStringAsFixed(0)}',
+              '₹${option.amount.toStringAsFixed(0)}',
               style: AppTextStyles.bodyMd.copyWith(
                 fontWeight: FontWeight.w700,
                 color: selected ? AppColors.primary : AppColors.onSurface,
